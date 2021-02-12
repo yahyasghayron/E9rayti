@@ -13,6 +13,7 @@ class Artical extends Component {
     static propTypes = {
         match: PropTypes.object.isRequired,
 
+        auth: PropTypes.object.isRequired,
 
         getComments: PropTypes.func.isRequired,
         getArtical: PropTypes.func.isRequired,
@@ -31,6 +32,9 @@ class Artical extends Component {
 
 
     render() {
+        const { isAuthenticated, user } = this.props.auth;
+
+        
         return (
             <Fragment>
 
@@ -57,15 +61,22 @@ class Artical extends Component {
 
                                 {ReactHtmlParser(artical.content)}
                             </div>
-                            <div className="d-flex flex-row-reverse  align-items-right m-2 ">
+                            { user.username == artical.author ?
+                             
+                             (
+                                <div>
+                                <div className="d-flex flex-row-reverse  align-items-right m-2 ">
                                 <div className='btn btn-danger ' onClick={this.props.deleteArtical.bind(this, artical.id)}> <a href="http://localhost:8000/#/posts">delete </a> </div>
                                 <div> <Link to={`/post/update/${artical.id}`}> <div className="btn btn-dark mr-2" > update</div></Link></div>
+                        
+                                 </div>
+                                <hr />
+                                    </div>
+                             ): (<div></div>) }
 
-                            </div>
-                            <hr />
+                          
 
                             <span className="muted"> comments </span>
-
 
                             {/* <Comments comments={this.props.comments} /> */}
 
@@ -93,6 +104,7 @@ class Artical extends Component {
 const mapStateToProps = state => ({
     articals: state.articals.articals,
     comments: state.comments.comments,
+    auth: state.auth
 
 });
 
