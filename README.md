@@ -1,2 +1,2 @@
 # E9rayti
-E-learning project withe django and reactJS
+E-learning project with django and reactJS
